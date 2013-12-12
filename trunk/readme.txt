@@ -4,7 +4,7 @@ Donate link: http://webshoplogic.com/donation-wp-related-items-lite/
 Tags: related, related items, related posts, relationship, cross relationship, similar, webshop, e-commerce, custom posttype, yarpp, yet another related posts plugin, woocommerce, thumbnails, automatic relationship, manual relationship
 Requires at least: 3.7.1
 Tested up to: 3.7.1
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,6 +113,23 @@ Yes. WRI uses the YARPP plugin that supports custom post types. Please find more
 
 = 1.0 =
 * First version
+
+= 1.0.1 =
+* Delete assets folder from plugin folder (move it to svn root)
+* Insert donation link into admin page
+* Insert donation link into Wordpress Plugin Directory (readme.txt)
+* Modify readme.txt text
+
+= 1.0.2 =
+* Repair plugin header comment signs, to try to resolve "The plugin does not have a valid header" error.
+
+= 1.0.3 =
+* Delete advanced-custom-fields/acf.php sub-plugin header, to resolve "The plugin does not have a valid header" error.
+
+= 1.0.4 =
+* Put back advanced-custom-fields/acf.php sub-plugin header informations, and change it to WordPress does not realize it as a plugin header, because it caused "The plugin does not have a valid header" error.
+
+
 
 == Upgrade Notice ==
 
