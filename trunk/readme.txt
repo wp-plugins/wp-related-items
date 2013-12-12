@@ -1,7 +1,7 @@
 ﻿=== WP Related Items (WRI) ===
 Contributors: WebshopLogic
-Donate link: 
-Tags: related, cross relationship, similar, webshop
+Donate link: http://webshoplogic.com/donation-wp-related-items-lite/
+Tags: related, related items, related posts, relationship, cross relationship, similar, webshop, e-commerce, custom posttype, yarpp, yet another related posts plugin, woocommerce, thumbnails, automatic relationship, manual relationship
 Requires at least: 3.7.1
 Tested up to: 3.7.1
 Stable tag: 1.0
@@ -53,6 +53,7 @@ Manual assignment of items is possible. This way you can define explicit relatio
 * More relationship widget options
 * Display positioning (top or bottom of content)
 * Related items for archive pages
+Pro version Plugin Page: http://webshoplogic.com/product/wp-related-items-wri-plugin/
 
 = Upcoming features =
 * Native support of further WP based e-commerce solutions
