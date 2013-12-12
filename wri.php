@@ -1,16 +1,16 @@
 <?php
 /*
- * Plugin Name: WP Related Items (WRI) by WebshopLogic
- * Plugin URI: http://webshoplogic.com/product/wp-related-items-lite-wri-plugin/
- * Description: Would you like to offer some related products to your blog posts from your webshop? Do you have an event calendar plugin, end want to suggest some programs to an article? Do you have a custom movie catalog plugin and want to associate some articles to your movies? You need WordPress Related Items plugin, which supports cross post type relationships.  
- * Version: 1.0
- * Author: WebshopLogic
- * Author URI: http://webshoplogic.com/
- * License: GPLv2 or later
- * Text Domain: wri
- * Requires at least: WordPress 3.7.1, Yet Another Related Posts Plugin 4.0
- * Tested up to: WordPress 3.7.1, Yet Another Related Posts Plugin 4.0
- */
+Plugin Name: WP Related Items (WRI) by WebshopLogic
+Plugin URI: http://webshoplogic.com/product/wp-related-items-lite-wri-plugin/
+Description: Would you like to offer some related products to your blog posts from your webshop? Do you have an event calendar plugin, end want to suggest some programs to an article? Do you have a custom movie catalog plugin and want to associate some articles to your movies? You need WordPress Related Items plugin, which supports cross post type relationships.  
+Version: 1.0
+Author: WebshopLogic
+Author URI: http://webshoplogic.com/
+License: GPLv2 or later
+Text Domain: wri
+Requires at least: WordPress 3.7.1, Yet Another Related Posts Plugin 4.0
+Tested up to: WordPress 3.7.1, Yet Another Related Posts Plugin 4.0
+*/
  
  
 if ( ! class_exists( 'WRI' ) ) {
@@ -167,109 +167,115 @@ class WRI {
 		
 		global $wpdb, $post;
 		
+		$reference_post_type_name = get_post_type();
+		
 		$wri_general_settings = get_option('wri_general_settings');
 		
 		if (is_array($wri_general_settings['wri_used_posttypes'])) {
 		
 			$wri_used_posttypes = array_keys( $wri_general_settings['wri_used_posttypes'] );
 	
-			unset($reference2related_option_array);    // This deletes the whole array
-			
-			//Collect the options into an array (for ordering)
-			foreach ($wri_used_posttypes as $wri_used_posttype) {
+			if (in_array($reference_post_type_name, $wri_used_posttypes)) {  //reference post type is supported by WRI?
+	
+				unset($reference2related_option_array);    // This deletes the whole array
 				
-				$reference2related_option_array[]=get_option( 'wri_reference2related_items__' . get_post_type() . '--' . $wri_used_posttype );
-			
-			}
-			
-			if ( is_array($reference2related_option_array) ) {
-	
-				// Obtain a list of columns for sort field, then short the array by display order
-	
-				foreach ($reference2related_option_array as $key => $value) {
-				    $tmp[$key]  = $value['display_order'];
-				}
-	
-				array_multisort($tmp, SORT_ASC, $reference2related_option_array);
-		
-				$yarpp_option = get_option('yarpp');
-				
-				$singular = is_singular();
-	
-				foreach ($reference2related_option_array as $reference2related_option) {
+				//Collect the options into an array (for ordering)
+				foreach ($wri_used_posttypes as $wri_used_posttype) {
 					
-					if (
-							('on_page' == $placement && $singular && $reference2related_option['position'] == $position) //in case of on_page display, if position is fit
-							||('on_page' == $placement && !$singular && $reference2related_option['position_in_archive'] == $position)
-							||('on_widget' == $placement && $reference2related_option['related_posttype'] == $widget_instance['related_posttype'] //or in case of on_widget display and widget's related type is match 
-								&& ('just_on_widget' == $reference2related_option['position'] ||'1' != $widget_instance['hide_if_duplicate']) // and if the position setting is 'just on widget' or if not, but the hide_id_duplicate is turned off 
-							  )
-						) {
-	
-						$related_option = get_option( 'wri_related_items___' . $reference2related_option['related_posttype'] );  //get related_item options
-						
-						$wri_template = '';
-						$wri_template = apply_filters('wri_choose_template', '', $placement, $position, $widget_instance, $related_option, $reference2related_option);
-	
-						$option_array=array(
-								// Pool options: these determine the "pool" of entities which are considered
-								'post_type' => array( $reference2related_option['related_posttype'] ), 
-								//'show_pass_post' => false, // show password-protected posts
-								//'past_only' => false, // show only posts which were published before the reference post
-								//'exclude' => array(), // a list of term_taxonomy_ids. entities with any of these terms will be excluded from consideration.
-								//'recent' => false, // to limit to entries published recently, set to something like '15 day', '20 week', or '12 month'.
-								
-								// Relatedness options: these determine how "relatedness" is computed
-								// Weights are used to construct the "match score" between candidates and the reference post
-								//'weight' => array(
-								//	'body' => 1,
-								//	'title' => 2, // larger weights mean this criteria will be weighted more heavily
-								//	'tax' => array(
-								//		'post_tag' => 1,
-								//		'category' => 1
-										//... put any taxonomies you want to consider here with their weights
-								//	)
-								//),
-								// Specify taxonomies and a number here to require that a certain number be shared:
-								//'require_tax' => array(
-								//	'post_tag' => 1 // for example, this requires all results to have at least one 'post_tag' in common.
-								//),
-								// The threshold which must be met by the "match score"
-								'threshold' => (int) nvl($widget_instance['match_threshold'], $reference2related_option['match_threshold']),
-								// Display options:
-								'template' => $wri_template, // either the name of a file in your active theme or the boolean false to use the builtin template
-								'limit' => (int) nvl($widget_instance['display_limit'],nvl( $reference2related_option['display_limit'], $yarpp_option['limit'] )), // maximum number of results
-								'order' => nvl($widget_instance['order'],nvl( $reference2related_option['order'], $yarpp_option['order'] )), // e.g. 'score DESC'
-								'wri_title' => $enable_title ? $related_option['title'] : '',
-								'wri_before_title_tags' => $related_option['before_title_tags'],
-								'wri_after_title_tags' => $related_option['after_title_tags'],
-								'wri_no_result_display_text' => nvl($related_option['no_result_display'], $yarpp_option['no_results']),
-								
-								'wri_thumbnail_width' => (int) $widget_instance['thumbnail_width'],
-								'wri_thumbnail_height' => (int) $widget_instance['thumbnail_height'],
-								'wri_maximum_excerpt_characters' => (int) $widget_instance['maximum_excerpt_characters']
-								
-						);
-	
-						$option_array = array_diff($option_array, array('')); //Remove empty (null) array elements. This is important because setup_active_cache function of yapp may baypass cache because of a null value
-	
-						$wri_yarpp_related_options = ($option_array
-							//,$reference_ID // second argument: (optional) the post ID. If not included, it will use the current post.
-							//,true // third argument: (optional) true to echo the HTML block; false to return it
-						);
+					$reference2related_option_array[]=get_option( 'wri_reference2related_items__' . $reference_post_type_name . '--' . $wri_used_posttype );
+				
+				}
+				
+				if ( is_array($reference2related_option_array) ) {
 		
+					// Obtain a list of columns for sort field, then short the array by display order
 		
-						$wri_yarpp_related_options = apply_filters('wri_yarpp_related_options', $wri_yarpp_related_options); //you can change related options array using this filter
-						
-						yarpp_related($wri_yarpp_related_options);
-		
+					foreach ($reference2related_option_array as $key => $value) {
+					    $tmp[$key]  = $value['display_order'];
 					}
-	
-				wp_reset_postdata();
 		
-				} //end for
+					array_multisort($tmp, SORT_ASC, $reference2related_option_array);
 			
-			} //end if
+					$yarpp_option = get_option('yarpp');
+					
+					$singular = is_singular();
+		
+					foreach ($reference2related_option_array as $reference2related_option) {
+						
+						if (
+								('on_page' == $placement && $singular && $reference2related_option['position'] == $position) //in case of on_page display, if position is fit
+								||('on_page' == $placement && !$singular && $reference2related_option['position_in_archive'] == $position)
+								||('on_widget' == $placement && $reference2related_option['related_posttype'] == $widget_instance['related_posttype'] //or in case of on_widget display and widget's related type is match 
+									&& ('just_on_widget' == $reference2related_option['position'] ||'1' != $widget_instance['hide_if_duplicate']) // and if the position setting is 'just on widget' or if not, but the hide_id_duplicate is turned off 
+								  )
+							) {
+		
+							$related_option = get_option( 'wri_related_items___' . $reference2related_option['related_posttype'] );  //get related_item options
+							
+							$wri_template = '';
+							$wri_template = apply_filters('wri_choose_template', '', $placement, $position, $widget_instance, $related_option, $reference2related_option);
+		
+							$option_array=array(
+									// Pool options: these determine the "pool" of entities which are considered
+									'post_type' => array( $reference2related_option['related_posttype'] ), 
+									//'show_pass_post' => false, // show password-protected posts
+									//'past_only' => false, // show only posts which were published before the reference post
+									//'exclude' => array(), // a list of term_taxonomy_ids. entities with any of these terms will be excluded from consideration.
+									//'recent' => false, // to limit to entries published recently, set to something like '15 day', '20 week', or '12 month'.
+									
+									// Relatedness options: these determine how "relatedness" is computed
+									// Weights are used to construct the "match score" between candidates and the reference post
+									//'weight' => array(
+									//	'body' => 1,
+									//	'title' => 2, // larger weights mean this criteria will be weighted more heavily
+									//	'tax' => array(
+									//		'post_tag' => 1,
+									//		'category' => 1
+											//... put any taxonomies you want to consider here with their weights
+									//	)
+									//),
+									// Specify taxonomies and a number here to require that a certain number be shared:
+									//'require_tax' => array(
+									//	'post_tag' => 1 // for example, this requires all results to have at least one 'post_tag' in common.
+									//),
+									// The threshold which must be met by the "match score"
+									'threshold' => (int) nvl($widget_instance['match_threshold'], $reference2related_option['match_threshold']),
+									// Display options:
+									'template' => $wri_template, // either the name of a file in your active theme or the boolean false to use the builtin template
+									'limit' => (int) nvl($widget_instance['display_limit'],nvl( $reference2related_option['display_limit'], $yarpp_option['limit'] )), // maximum number of results
+									'order' => nvl($widget_instance['order'],nvl( $reference2related_option['order'], $yarpp_option['order'] )), // e.g. 'score DESC'
+									'wri_title' => $enable_title ? $related_option['title'] : '',
+									'wri_before_title_tags' => $related_option['before_title_tags'],
+									'wri_after_title_tags' => $related_option['after_title_tags'],
+									'wri_no_result_display_text' => nvl($related_option['no_result_display'], $yarpp_option['no_results']),
+									
+									'wri_thumbnail_width' => (int) $widget_instance['thumbnail_width'],
+									'wri_thumbnail_height' => (int) $widget_instance['thumbnail_height'],
+									'wri_maximum_excerpt_characters' => (int) $widget_instance['maximum_excerpt_characters']
+									
+							);
+		
+							$option_array = array_diff($option_array, array('')); //Remove empty (null) array elements. This is important because setup_active_cache function of yapp may baypass cache because of a null value
+		
+							$wri_yarpp_related_options = ($option_array
+								//,$reference_ID // second argument: (optional) the post ID. If not included, it will use the current post.
+								//,true // third argument: (optional) true to echo the HTML block; false to return it
+							);
+			
+			
+							$wri_yarpp_related_options = apply_filters('wri_yarpp_related_options', $wri_yarpp_related_options); //you can change related options array using this filter
+							
+							yarpp_related($wri_yarpp_related_options);
+			
+						}
+		
+					wp_reset_postdata();
+			
+					} //end for
+				
+				} //end if
+				
+			} //end if				
 			
 		} //end_if
 		

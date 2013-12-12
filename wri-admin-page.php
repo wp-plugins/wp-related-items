@@ -504,7 +504,7 @@ class WRI_Admin_Page {
 					$this->options = get_option( 'wri_general_settings' ); //option_name
 
 					?>
-					<h3><?php _e('WebstoreLogic Related Items (WRI) general settings','wri') ?></h3>
+					<h3><?php _e('WP Related Items (WRI) general settings','wri') ?></h3>
 					<?php echo __('Enter your settings below','wri') . ':' ?>
 	
 					<!-- GENERAL TAB -->
@@ -1024,6 +1024,13 @@ class WRI_Admin_Page {
 							a.wli_pro:hover {color: black; text-decoration:underline;}
 							a.wli_pro:active {color: black; text-decoration:none;}
 						</style>
+
+						<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+						<input type="hidden" name="cmd" value="_s-xclick">
+						<input type="hidden" name="hosted_button_id" value="9BNCA3P5MZMQG">
+						<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+						<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+						</form>
 						
 						<a href="http://webshoplogic.com/product/wp-related-items-wri-plugin/" class="wli_pro" target="_blank">
 							<h2><?php _e('Upgrade to PRO version', 'wri'); ?></h2>
