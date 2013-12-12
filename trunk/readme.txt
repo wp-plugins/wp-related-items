@@ -4,7 +4,7 @@ Donate link: http://webshoplogic.com/donation-wp-related-items-lite/
 Tags: related, related items, related posts, relationship, cross relationship, similar, webshop, e-commerce, custom posttype, yarpp, yet another related posts plugin, woocommerce, thumbnails, automatic relationship, manual relationship
 Requires at least: 3.7.1
 Tested up to: 3.7.1
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
