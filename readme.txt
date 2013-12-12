@@ -12,11 +12,18 @@ WP Related Items plugin makes visible every kind of hidden connections of your s
 
 == Description ==
 
-Would you like to offer some related products to your blog posts? Do you have an event calendar plugin, end want to suggest some programs connected to an article? Do you have a custom movie catalog plugin and want to associate some articles to your movies? 
+Would you like to offer some related products to your blog posts? Do you have an event calendar plugin, and want to suggest some programs connected to an article? Do you have a custom movie catalog plugin and want to associate some articles to your movies? 
 You need WordPress Related Items plugin, which supports cross post type relationships. 
 Set attributes that define how to display different type of related items for every reference item type. Such a matrix-like way you can specify all necessary variations of display settings.
- 
-WP Related Items (WRI) plugin display related items for the current post.  This plugin ensures widely configurable relatedness settings, sophisticated cross-relation adjustments. WRI uses the most popular YARPP relationship handling plugin in the background, extending its functionality, retaining its advantages. Built in WooCommerce product support.
+
+So this plugin makes it possible to associate a post, page, or other custom post type to other posts, pages or custom post types, ensures widely configurable relatedness settings, sophisticated cross-relation adjustments. WRI uses the most popular YARPP relationship handling plugin in the background, extending its functionality, retaining its advantages. 
+WRI combines automatic, manual and common categorization based relationship management. Some functions are available in the PRO version.
+
+This version ensures built in WooCommerce custom product support. 
+
+Author website: http://webshoplogic.com/
+
+Pro version Plugin Page: http://webshoplogic.com/product/wp-related-items-wri-plugin/
 
 = Configuration options =
 
