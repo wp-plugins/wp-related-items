@@ -1,6 +1,19 @@
 <?php
 
 // lite mode
+
+/*
+Name: Advanced Custom Fields
+URI: http://www.advancedcustomfields.com/
+Description: Fully customise WordPress edit screens with powerful fields. Boasting a professional interface and a powerfull API, it’s a must have for any web developer working with WordPress. Field types include: Wysiwyg, text, textarea, image, file, select, checkbox, page link, post object, date picker, color picker, repeater, flexible content, gallery and more!
+Ver: 4.2.2
+Author: Elliot Condon
+Author URI: http://www.elliotcondon.com/
+License: GPL
+Copyright: Elliot Condon
+*/
+
+// lite mode
 if( !defined('ACF_LITE') )
 {
 	define( 'ACF_LITE', false );
