@@ -10,13 +10,18 @@ function wri_woocommerce_init() {
 	//set woocommerce template decision roules
 	add_filter('wri_choose_template', 'wri_choose_template_woocommerce',15,6); 
 
+	//This is not necessary, because wri->modify_cpt_yarpp_support and wri->modify_tax_yarpp_support do this generally
+	/*
 	//set yarpp support for woocommerce product post type, tags and categories
 	add_filter('woocommerce_register_post_type_product', 'woocommerce_register_post_type_product_filter' );
 	add_filter('woocommerce_taxonomy_args_product_tag', 'woocommerce_taxonomy_args_product_tag_filter' );
 	add_filter('woocommerce_taxonomy_args_product_cat', 'woocommerce_taxonomy_args_product_cat_filter' );
+	*/
 
 }
 
+//This is not necessary, because wri->modify_cpt_yarpp_support and wri->modify_tax_yarpp_support do this generally
+/*
 function woocommerce_register_post_type_product_filter( $array ){
 	//set yarpp support for woocommerce product post type
     $array['yarpp_support']=true;
@@ -35,6 +40,7 @@ function woocommerce_taxonomy_args_product_cat_filter( $array ){
     $array['yarpp_support']=true;
     return $array;
 }
+*/
 
 function wri_choose_template_woocommerce($val, $placement, $position, $widget_instance, $related_option, $reference2related_option) {
 	//select the appropriate template files speciali for Woocommerce product

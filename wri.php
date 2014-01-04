@@ -3,7 +3,7 @@
 Plugin Name: WP Related Items (WRI) by WebshopLogic
 Plugin URI: http://webshoplogic.com/product/wp-related-items-lite-wri-plugin/
 Description: Would you like to offer some related products to your blog posts from your webshop? Do you have an event calendar plugin, end want to suggest some programs to an article? Do you have a custom movie catalog plugin and want to associate some articles to your movies? You need WordPress Related Items plugin, which supports cross post type relationships.
-Version: 1.0.4
+Version: 1.0.5
 Author: WebshopLogic
 Author URI: http://webshoplogic.com/
 License: GPLv2 or later
@@ -25,8 +25,6 @@ class WRI {
 
 		$wri_is_premium = FALSE;
 
-
-
 		include_once( 'wri-utils.php' );
 		include_once( 'wri-admin-page.php' );
 
@@ -37,6 +35,7 @@ class WRI {
 		$wri_general_settings = get_option('wri_general_settings');
 
 		include_once( ABSPATH . 'wp-admin/includes/plugin.php' ); //is_plugin_active needs to include this
+		
 		if ( 1 == $wri_general_settings['enable_plugin'] && is_plugin_active('yet-another-related-posts-plugin/yarpp.php')) {  //if WRI plugin and yarpp is ENABLED
 
 			include_once( 'wri-widget.php' );
@@ -48,20 +47,18 @@ class WRI {
 			include_once( 'advanced-custom-fields/acf.php' );
 			include_once( 'wri-admin-manual_relations.php' );
 
-
-
 			add_filter( 'the_content', array( $this, 'the_wri_content_page_bottom' ), 1200 );
 
 			add_filter('wri_choose_template', array( $this, 'wri_choose_template'),10,6);
 			//special templates can be inserted this filter (e.g. WooCommerce)
 
+			//set yarpp_support for all selected post types chosen by user
+			add_action( 'registered_post_type', array($this, 'modify_cpt_yarpp_support'), 10, 2 );
+			add_action( 'registered_taxonomy', array($this, 'modify_tax_yarpp_support'), 10, 3 );
+
 			do_action( 'wri_intagration_init' );
 
-
-
-
-
-		}
+			}
 
 	}
 
@@ -69,10 +66,12 @@ class WRI {
 
 		load_plugin_textdomain( 'wri', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
+
 		global $wri_admin_page;
 		$wri_admin_page = new WRI_Admin_Page;
 
 		$wri_general_settings = get_option('wri_general_settings');
+
 		if ( 1 == $wri_general_settings['enable_plugin'] && is_plugin_active('yet-another-related-posts-plugin/yarpp.php')) {  //if WRI plugin and yarpp is ENABLED
 
 			add_filter( 'body_class', array( $this, 'wri_item_columns_class' ) ); //column handling part
@@ -84,7 +83,13 @@ class WRI {
 
 			do_action( 'wri_init' );
 
+			if ( 1 == $wri_general_settings['hide_woocommerce_related_products'] ) {
+				// Remove WooCommerce Related Products
+				remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20);
+			}
+
 		}
+
 
 	}
 
@@ -125,11 +130,8 @@ class WRI {
 	public $template_url;
 
 
-
-
 	function the_wri_content_page_bottom($content) {
 		if ( in_the_loop() ) {
-
 			remove_filter( 'the_content', array( $this, 'the_wri_content_page_bottom' ), 1200 );
 			$content =
 				apply_filters('wri_content_clear_start','<div class="wri_content_clear_both">')
@@ -137,7 +139,6 @@ class WRI {
 				. apply_filters('wri_content_clear_end','</div>')
 				. $this->wri_display_related('on_page', 'bottom', null, TRUE)
 				. $this->promote_text();
-
 			add_filter( 'the_content', array( $this, 'the_wri_content_page_bottom' ), 1200 );
 		}
 	return $content;
@@ -153,7 +154,7 @@ class WRI {
 		if ( 1 == $wri_general_settings['promote'] and !$wri_no_result) {
 
 			$ret = '<div class="wri_promote" >'
-				. (__('Related items is presented by WebshopLogic Related Items Plugin.'))
+				. (__('Related items is presented by WP Related Items Plugin.'))
 				. '</div>';
 
 		}
@@ -241,17 +242,18 @@ class WRI {
 									// The threshold which must be met by the "match score"
 									'threshold' => (int) nvl($widget_instance['match_threshold'], $reference2related_option['match_threshold']),
 									// Display options:
-									'template' => $wri_template, // either the name of a file in your active theme or the boolean false to use the builtin template
+									'template' => $wri_template, // either the name of a file in your active theme or boolean=false to use the builtin template
 									'limit' => (int) nvl($widget_instance['display_limit'],nvl( $reference2related_option['display_limit'], $yarpp_option['limit'] )), // maximum number of results
 									'order' => nvl($widget_instance['order'],nvl( $reference2related_option['order'], $yarpp_option['order'] )), // e.g. 'score DESC'
 									'wri_title' => $enable_title ? $related_option['title'] : '',
 									'wri_before_title_tags' => $related_option['before_title_tags'],
 									'wri_after_title_tags' => $related_option['after_title_tags'],
 									'wri_no_result_display_text' => nvl($related_option['no_result_display'], $yarpp_option['no_results']),
-
 									'wri_thumbnail_width' => (int) $widget_instance['thumbnail_width'],
 									'wri_thumbnail_height' => (int) $widget_instance['thumbnail_height'],
-									'wri_maximum_excerpt_characters' => (int) $widget_instance['maximum_excerpt_characters']
+									'wri_maximum_excerpt_characters' => (int) $widget_instance['maximum_excerpt_characters'],
+									'wri_widget_mode' => isset($widget_instance)
+
 
 							);
 
@@ -347,8 +349,6 @@ class WRI {
 		$ret=array();
 		$wri_general_settings = get_option('wri_general_settings');
 
-
-
 		if ( is_array( $wri_general_settings['wri_used_posttypes'] ) ) {
 			foreach ( array_keys( $wri_general_settings['wri_used_posttypes'] ) as $act_wri_used_posttype_name ) {
 
@@ -363,6 +363,48 @@ class WRI {
 		return $ret;
 
 	}
+
+
+	function modify_cpt_yarpp_support( $post_type, $args ) {
+
+		global $wp_post_types;
+
+		$wri_general_settings = get_option('wri_general_settings');
+		$wri_used_posttypes = $wri_general_settings['wri_used_posttypes'];
+
+	    // Set yarpp_support argument for wri supported post types
+   		if ( is_array($wri_used_posttypes) ) {	    
+	   		if ( in_array( $post_type, array_keys( $wri_used_posttypes ) ) ) {
+	   			$wp_post_types[$post_type]->yarpp_support = true;
+	   		}
+		}
+
+	}
+
+	function modify_tax_yarpp_support( $taxonomy, $post_type, $args ) {
+
+		global $wp_taxonomies;
+
+	    // Set yarpp_support argument for all taxonomies that is registered to the post type.
+
+		$wri_general_settings = get_option('wri_general_settings');
+		$wri_used_posttypes = $wri_general_settings['wri_used_posttypes'];
+
+		//if post_type is string, we convert it to array
+	 	if (!is_array($post_type))
+			 $post_type_arr[] = $post_type;
+		else
+			$post_type_arr = $post_type;
+
+		//if the two array has common part:
+		if ( is_array($post_type_arr) and is_array($wri_used_posttypes) ) {
+			if (array_intersect($post_type_arr, array_keys( $wri_used_posttypes ))!=null){
+				$wp_taxonomies[$taxonomy]->yarpp_support = true;
+			}
+		}
+
+	}
+
 
 	public function get_featured_image_path() {
 
@@ -412,9 +454,6 @@ class WRI {
 
 	}
 
-
-
-
 	function wri_item_columns_class( $classes ) {
 
 		$post_type = get_post_type();
@@ -430,9 +469,7 @@ class WRI {
 		return $classes;
 	}
 
-
-
-}
+	}
 
 //Init wri class
 $GLOBALS['wri'] = new WRI();

@@ -7,12 +7,12 @@
  * Please find more details about templates in Yarpp documentations.
  */
 
-global $wri_no_result;
+global $wri_no_result, $wri_general_settings;
 
 if ( !$this->diagnostic_using_thumbnails() )
 	$this->set_option( 'manually_using_thumbnails', true );
 
-$options = array( 'thumbnails_heading', 'thumbnails_default', 'no_results', 'wri_title', 'wri_before_title_tags', 'wri_after_title_tags', 'wri_no_result_display_text', 'wri_thumbnail_columns_number');
+$options = array( 'thumbnails_default', 'no_results', 'wri_title', 'wri_before_title_tags', 'wri_after_title_tags', 'wri_no_result_display_text', 'wri_thumbnail_columns_number', 'wri_widget_mode' );
 extract( $this->parse_args( $args, $options ) );
 
 if ( empty($thumbnails_default) )
@@ -27,7 +27,7 @@ if ( have_posts() || !empty($wri_no_result_display_text) ) {
 		
 	if ( $wri_title != null ) {
 		$title = $wri_before_title_tags . $wri_title . $wri_after_title_tags;
-	} else {
+	} else if ('1' == $wri_general_settings['use_yarpp_title'] and !$wri_widget_mode) {
 		$title = $yarpp_option['before_related'] . $yarpp_option['after_related'];		
 	}
 
