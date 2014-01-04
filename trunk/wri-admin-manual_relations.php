@@ -11,7 +11,6 @@ class WRI_manual_relationships {
 			global $wri, $wri_is_premium;
 			$this->wri_used_post_type_names = $wri->wri_used_post_types('names');
 			
-			
 			add_action( 'admin_init', array( $this, 'wri_manual_relationships_init' ) );
 			
 		}
@@ -26,9 +25,7 @@ class WRI_manual_relationships {
 			
 		$this->register_manual_relationships_field_group();	
 
-		
-		
-	}
+		}
 
  
 /**
@@ -71,7 +68,7 @@ class WRI_manual_relationships {
 						'type' => 'relationship',
 						'instructions' => $wri_is_premium ? 
 							__('Chose items from left side list and add it to the right side list.','wri') :						
-							__('This function is available only on WRI premium version. Manually adjusted relationships have no effects on WRI free version. Dont use on free version, because relationships are not saved!','wri'),
+							__('This function is available only on WRI premium version. Manually adjusted relationships have no effects on WRI free version. You can try, but dont use it on free version, because relationships are not saved!','wri'),
 						'return_format' => 'id',
 						'post_type' => $this->wri_used_post_type_names, 
 						'taxonomy' => array (
@@ -121,12 +118,4 @@ class WRI_manual_relationships {
 	}
 
 
-	
-
-	
-
-	
-	
-	
-	
-}
+	}

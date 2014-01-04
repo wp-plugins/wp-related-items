@@ -12,17 +12,17 @@ class WRI_Widget extends WP_Widget {
 
 
 	function widget($args, $instance) {
+		
+		global $wri, $wri_general_settings;
 			
 		if ( (empty($instance['reference_posttype'])
-				
-			 )
+				)
 			&& ( 
 				(is_singular() && '1' == $instance['display'])
-				
-			   )
+				)
 			 ) {
 		
-			global $wri;
+			
 			$content = $wri->wri_display_related( 'on_widget', null, $instance, FALSE);
 			
 			if ((trim(strip_tags($content))) != null) {
@@ -35,8 +35,11 @@ class WRI_Widget extends WP_Widget {
 				$related_option=get_option( 'wri_related_items___' . $instance['related_posttype'] );
 				$yarpp_option = get_option('yarpp');
 				
-				
-				$title=nvl($instance['title'], nvl( strip_tags($related_option['title'] ), strip_tags( $yarpp_option['before_related'] . $yarpp_option['after_related']) ) ); //if exists use widget custom title, else wri post related tilte, else yarpp title   
+				$yarpp_title = '';
+				if ( '1' == $wri_general_settings['use_yarpp_title'] ) {
+					$yarpp_title = $yarpp_option['before_related'] . $yarpp_option['after_related'];					
+				}
+				$title=nvl($instance['title'], nvl( strip_tags($related_option['title'] ), strip_tags( $yarpp_title ) ) ); //if exists use widget custom title, else wri post related tilte, else yarpp title   
 				$title = apply_filters( 'widget_title', $title );
 				echo $args['before_widget'];
 				if ( '1'!=$instance['hide_title'] )
@@ -62,13 +65,11 @@ class WRI_Widget extends WP_Widget {
 		$instance['match_threshold'] = ( ! empty( $new_instance['match_threshold'] ) ) ? strip_tags( $new_instance['match_threshold'] ) : '';
 		$instance['order'] = ( ! empty( $new_instance['order'] ) ) ? strip_tags( $new_instance['order'] ) : '';		
 		$instance['display'] = ( ! empty( $new_instance['display'] ) ) ? strip_tags( $new_instance['display'] ) : 0;
-		
 		$instance['list_thumbnail'] = ( ! empty( $new_instance['list_thumbnail'] ) ) ? strip_tags( $new_instance['list_thumbnail'] ) : '';
 		$instance['thumbnail_width'] = ( ! empty( $new_instance['thumbnail_width'] ) ) ? strip_tags( $new_instance['thumbnail_width'] ) : '';
 		$instance['thumbnail_height'] = ( ! empty( $new_instance['thumbnail_height'] ) ) ? strip_tags( $new_instance['thumbnail_height'] ) : '';
 		$instance['maximum_excerpt_characters'] = ( ! empty( $new_instance['maximum_excerpt_characters'] ) ) ? strip_tags( $new_instance['maximum_excerpt_characters'] ) : '';		
 		$instance['hide_if_duplicate'] = ( ! empty( $new_instance['hide_if_duplicate'] ) ) ? strip_tags( $new_instance['hide_if_duplicate'] ) : '';
-		
 		$instance['custom_template'] = ( ! empty( $new_instance['custom_template'] ) ) ? strip_tags( $new_instance['custom_template'] ) : '';
 		$instance['promote'] = ( ! empty( $new_instance['promote'] ) ) ? strip_tags( $new_instance['promote'] ) : 0;
 
@@ -88,7 +89,6 @@ class WRI_Widget extends WP_Widget {
 			'order' => null,
 			'thumbnail_style' => '',
 			'display' => 1,
-			
 			'list_thumbnail' => 'list',
 			'reference_posttype' => '',
 			'thumbnail_width' => '64',
