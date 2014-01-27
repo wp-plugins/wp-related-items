@@ -132,7 +132,7 @@ You can try to enter the value 1 as threshold, and if you get related items, you
 
 = 1.0.6 =
 * New Spanish translation - translated by Andrew Kurtis - WebHostingHub
-* Fix: Post and Product post type was wired in manual relationship ACF field, it is set up dynamycally now
+* Fix: Post and Product post type was wired in manual relationship ACF field, it is set up dynamically now
 * Fix: Advanced Custom Fields plugin conflict
 
 = 1.0.5 =
