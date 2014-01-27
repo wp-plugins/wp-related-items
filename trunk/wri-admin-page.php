@@ -1088,19 +1088,16 @@ class WRI_Admin_Page {
 							a.wli_pro:active {color: black; text-decoration:none;}
 						</style>
 
-						<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-						<input type="hidden" name="cmd" value="_s-xclick">
-						<input type="hidden" name="hosted_button_id" value="9BNCA3P5MZMQG">
-						<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
-						<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-						</form>
+						<a href="http://webshoplogic.com/donation-wp-related-items-lite/" class="wli_pro" target="_blank">
+							<img alt="Donate" src="<?php echo plugins_url('images/paypal_btn_donate_lg.gif', __FILE__)?>">
+						</a>
 						
 						<a href="http://webshoplogic.com/product/wp-related-items-wri-plugin/" class="wli_pro" target="_blank">
 							<h2><?php _e('Upgrade to PRO version', 'wri'); ?></h2>
 						</a>							
 						
 						<a href="http://webshoplogic.com/product/wp-related-items-wri-plugin/" class="wli_pro" target="_blank">
-							<img src="http://emberpalanta.hu/wp-content/plugins/wp-related-items/images/WLI_product_box_PRO_upgrade_right_v1_2e_235x235.png" alt="Upgrade to PRO">
+							<img src="<?php echo plugins_url('images/WLI_product_box_PRO_upgrade_right_v1_2e_235x235.png', __FILE__)?>" alt="Upgrade to PRO">
 						</a>
 						
 						<ul>

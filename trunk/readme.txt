@@ -1,17 +1,17 @@
 ﻿=== WP Related Items (WRI) ===
 Contributors: WebshopLogic
 Donate link: http://webshoplogic.com/donation-wp-related-items-lite/
-Tags: related, related items, related posts, relationship, cross relationship, similar, webshop, e-commerce, custom posttype, yarpp, yet another related posts plugin, woocommerce, thumbnails, automatic relationship, manual relationship
+Tags: related, related items, related posts, relationship, cross relationship, up-sell, cross-sell, similar, webshop, e-commerce, custom posttype, yarpp, yet another related posts plugin, woocommerce, thumbnails, automatic relationship, manual relationship
 Requires at least: 3.7.1
 Tested up to: 3.7.1
-Stable tag: 1.0.5
+Stable tag: 1.0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 WP Related Items plugin makes visible every kind of hidden connections of your site for your business. 
 
 == Description ==
 
-Would you like to offer some related products to your blog posts? Do you have an event calendar plugin, and want to suggest some programs connected to an article? Do you have a custom movie catalog plugin and want to associate some articles to your movies?
+Would you like to offer some related products to your blog posts? Do you need offer up-sell or cross-sell products? Do you have an event calendar plugin, and want to suggest some programs connected to an article? Do you have a custom movie catalog plugin and want to associate some articles to your movies?
 
 Using cross relationship management functions, WRI makes it possible to associate a post, page, or other custom post type to other posts, pages or custom post types, ensures widely configurable relatedness settings, sophisticated cross-relation adjustments. WRI uses the most popular YARPP relationship handling plugin in the background, extending its functionality, retaining its advantages.
 
@@ -59,6 +59,11 @@ Pro version Plugin Page: http://webshoplogic.com/product/wp-related-items-wri-pl
 = Upcoming features =
 * Native support of further WP based e-commerce solutions
 
+= Available languages =
+* English
+* Spanish - translated by Andrew Kurtis - WebHostingHub 
+* Hungarian - tranlated by WebshopLogic
+
 == Installation ==
 
 * Upload the plugin to the '/wp-content/plugins/' directory.
@@ -91,6 +96,20 @@ Yes, WRI supports WooCommerce products natively.
 
 Yes. WRI uses the YARPP plugin that supports custom post types. Please find more information in YARPP documentation.
 
+= What causes that related items do not appear? =
+
+The problem may be caused by several reasons:
+
+1. It is possible that the relevancy of similar products is lower than the match threshold, so YARPP can't find any related items. 
+Try to use lower match threshold using one of the following ways:
+- set lower threshold value for every post type on “Related Types” tab of “WP Related Items” options page.
+- or leave the above fields empty and set “Match threshold” on "Related Posts (YARPP)" options page. (If you can’t find these settings on YARPP admin page, you should switch on "Relatedness options" section using "Screen Options" tab on the upper right corner of YARPP options page.)
+You can try to enter the value 1 as threshold, and if you get related items, you can increase the value (if the value is too low, less relevant items will be displayed). So you can find the optimal threshold value.
+
+2. After you change WP Related Items settings, you may need to save YARPP settings also in Settings -> Related Posts (YARPP) menu, to refresh them. So please push “Save Changes” button on “Related Posts (YARPP)” options page.
+
+3. Try to increase relevancy between different types of post by using same words on the title or content or if you have pro version, use common categories or tags between different types of items.
+
 
 == Screenshots ==
 
@@ -111,6 +130,11 @@ Yes. WRI uses the YARPP plugin that supports custom post types. Please find more
 
 == Changelog ==
 
+= 1.0.6 =
+* New Spanish translation - translated by Andrew Kurtis - WebHostingHub
+* Fix: Post and Product post type was wired in manual relationship ACF field, it is set up dynamycally now
+* Fix: Advanced Custom Fields plugin conflict
+
 = 1.0.5 =
 * Advanced, completely general possibility to turn on any custom post type (if show_ui parameter of custom post type is true). It is turn on yarpp_support argument of all post types selected by the user.
 * Hide WRI Similarity Marker Category column on post admin pages
@@ -123,7 +147,7 @@ Yes. WRI uses the YARPP plugin that supports custom post types. Please find more
 
 
 = 1.0.4 =
-* Put back advanced-custom-fields/acf.php sub-plugin header informations, and change it to WordPress does not realize it as a plugin header, because it caused "The plugin does not have a valid header" error.
+* Put back advanced-custom-fields/acf.php sub-plugin header information, and change it to WordPress does not realize it as a plugin header, because it caused "The plugin does not have a valid header" error.
 
 = 1.0.3 =
 * Delete advanced-custom-fields/acf.php sub-plugin header, to resolve "The plugin does not have a valid header" error.
@@ -134,7 +158,7 @@ Yes. WRI uses the YARPP plugin that supports custom post types. Please find more
 = 1.0.1 =
 * Delete assets folder from plugin folder (move it to svn root)
 * Insert donation link into admin page
-* Insert donation link into Wordpress Plugin Directory (readme.txt)
+* Insert donation link into WordPress Plugin Directory (readme.txt)
 * Modify readme.txt text
 
 = 1.0 =
@@ -145,3 +169,4 @@ Yes. WRI uses the YARPP plugin that supports custom post types. Please find more
 
 = 1.0 =
 * First version
+
