@@ -3,7 +3,7 @@
 Plugin Name: WP Related Items (WRI) by WebshopLogic
 Plugin URI: http://webshoplogic.com/product/wp-related-items-lite-wri-plugin/
 Description: Would you like to offer some related products to your blog posts from your webshop? Do you have an event calendar plugin, end want to suggest some programs to an article? Do you have a custom movie catalog plugin and want to associate some articles to your movies? You need WordPress Related Items plugin, which supports cross post type relationships.
-Version: 1.0.5
+Version: 1.0.6
 Author: WebshopLogic
 Author URI: http://webshoplogic.com/
 License: GPLv2 or later
@@ -22,9 +22,8 @@ class WRI {
 
 
 		global $wri_is_premium, $wri_general_settings;
-
+		
 		$wri_is_premium = FALSE;
-
 		include_once( 'wri-utils.php' );
 		include_once( 'wri-admin-page.php' );
 
@@ -43,8 +42,13 @@ class WRI {
 			include_once( 'wri-woocommerce.php' );
 			include_once( 'wri-woocommerce-product-archive-customiser.php' );
 
-			define( 'ACF_LITE', true ); //remove all visual interfaces of ACF plugin
-			include_once( 'advanced-custom-fields/acf.php' );
+			if ( ! class_exists( 'Acf' ) ) {  //if ACF plugin is installed, it is not needed
+				
+				define( 'ACF_LITE', true ); //remove all visual interfaces of ACF plugin
+				include_once( 'advanced-custom-fields/acf.php' );
+
+			}			
+			
 			include_once( 'wri-admin-manual_relations.php' );
 
 			add_filter( 'the_content', array( $this, 'the_wri_content_page_bottom' ), 1200 );
