@@ -4,7 +4,7 @@ Donate link: http://webshoplogic.com/donation-wp-related-items-lite/
 Tags: related, related items, related posts, relationship, cross relationship, up-sell, cross-sell, similar, webshop, e-commerce, custom posttype, yarpp, yet another related posts plugin, woocommerce, thumbnails, automatic relationship, manual relationship
 Requires at least: 3.7.1
 Tested up to: 3.7.1
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 WP Related Items plugin makes visible every kind of hidden connections of your site for your business. 
@@ -100,15 +100,15 @@ Yes. WRI uses the YARPP plugin that supports custom post types. Please find more
 
 The problem may be caused by several reasons:
 
-1. It is possible that the relevancy of similar products is lower than the match threshold, so YARPP can't find any related items. 
+a. It is possible that the relevancy of similar products is lower than the match threshold, so YARPP can't find any related items. 
 Try to use lower match threshold using one of the following ways:
 - set lower threshold value for every post type on “Related Types” tab of “WP Related Items” options page.
 - or leave the above fields empty and set “Match threshold” on "Related Posts (YARPP)" options page. (If you can’t find these settings on YARPP admin page, you should switch on "Relatedness options" section using "Screen Options" tab on the upper right corner of YARPP options page.)
 You can try to enter the value 1 as threshold, and if you get related items, you can increase the value (if the value is too low, less relevant items will be displayed). So you can find the optimal threshold value.
 
-2. After you change WP Related Items settings, you may need to save YARPP settings also in Settings -> Related Posts (YARPP) menu, to refresh them. So please push “Save Changes” button on “Related Posts (YARPP)” options page.
+b. After you change WP Related Items settings, you may need to save YARPP settings also in Settings -> Related Posts (YARPP) menu, to refresh them. So please push “Save Changes” button on “Related Posts (YARPP)” options page.
 
-3. Try to increase relevancy between different types of post by using same words on the title or content or if you have pro version, use common categories or tags between different types of items.
+c. Try to increase relevancy between different types of post by using same words on the title or content or if you have pro version, use common categories or tags between different types of items.
 
 
 == Screenshots ==
@@ -130,9 +130,12 @@ You can try to enter the value 1 as threshold, and if you get related items, you
 
 == Changelog ==
 
+= 1.0.7 =
+* fix: disable wordpress.org update for PRO version
+
 = 1.0.6 =
 * New Spanish translation - translated by Andrew Kurtis - WebHostingHub
-* Fix: Post and Product post type was wired in manual relationship ACF field, it is set up dynamically now
+* Fix: Post and Product post type was wired in manual relationship ACF field, it is set up dynamycally now
 * Fix: Advanced Custom Fields plugin conflict
 
 = 1.0.5 =
@@ -144,7 +147,6 @@ You can try to enter the value 1 as threshold, and if you get related items, you
 * Hungarian language version
 * Clarification of labels
 * Fix: Handling some checkbox of Admin panel
-
 
 = 1.0.4 =
 * Put back advanced-custom-fields/acf.php sub-plugin header information, and change it to WordPress does not realize it as a plugin header, because it caused "The plugin does not have a valid header" error.
