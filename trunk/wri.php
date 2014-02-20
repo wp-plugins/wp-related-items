@@ -3,7 +3,7 @@
 Plugin Name: WP Related Items (WRI) by WebshopLogic
 Plugin URI: http://webshoplogic.com/product/wp-related-items-lite-wri-plugin/
 Description: Would you like to offer some related products to your blog posts from your webshop? Do you have an event calendar plugin, end want to suggest some programs to an article? Do you have a custom movie catalog plugin and want to associate some articles to your movies? You need WordPress Related Items plugin, which supports cross post type relationships.
-Version: 1.0.8
+Version: 1.0.9
 Author: WebshopLogic
 Author URI: http://webshoplogic.com/
 License: GPLv2 or later
