@@ -4,7 +4,7 @@ Donate link: http://webshoplogic.com/donation-wp-related-items-lite/
 Tags: related, related items, related posts, relationship, cross relationship, up-sell, cross-sell, similar, webshop, e-commerce, custom posttype, yarpp, yet another related posts plugin, woocommerce, thumbnails, automatic relationship, manual relationship
 Requires at least: 3.7.1
 Tested up to: 3.7.1
-Stable tag: 1.0.8
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 WP Related Items plugin makes visible every kind of hidden connections of your site for your business. 
@@ -129,6 +129,10 @@ c. Try to increase relevancy between different types of post by using same words
 
 
 == Changelog ==
+
+= 1.1.0 =
+* Same functionality as 1.0.8 
+* fix versioning problem
 
 = 1.0.8 =
 * fix: version handling problem
