@@ -43,7 +43,7 @@ class WRI_Admin_Page {
 		global $wri;
 		$this->wri_supported_post_types = $wri->wri_supported_post_types('objects');
 		$this->wri_used_post_types = $wri->wri_used_post_types('objects');
-
+		
 		$this->wri_set_defaults();    	
     	//different options are needed if fields go to different pages!
 		
@@ -69,7 +69,7 @@ class WRI_Admin_Page {
 		
         add_settings_field(
             'enable_plugin', // ID
-            __('Enable Plugin','wri'), // Title 
+            __('Enable WRI Plugin','wri'), // Title 
             array( $this, 'posttype_callback' ), // Callback
             'wri_general_settings_tabpage', // Page
             'wri_general_section' // Section           
@@ -85,7 +85,7 @@ class WRI_Admin_Page {
 		
         add_settings_field(
             'wri_maual_relationships_weight', // ID
-            __('WRI Manual Relationships Weight','wri'), // Title 
+            __('WRI Manual Relationships Weight (pro)','wri'), // Title 
             array( $this, 'posttype_callback' ), // Callback
             'wri_general_settings_tabpage', // Page
             'wri_general_section' // Section           
@@ -94,7 +94,7 @@ class WRI_Admin_Page {
 
         add_settings_field(
             'enable_wri_category', // ID
-            __('Enable settings of WRI Categories','wri'), // Title 
+            __('Enable Similarity Marker Categories (pro)','wri'), // Title 
             array( $this, 'posttype_callback' ), // Callback
             'wri_general_settings_tabpage', // Page
             'wri_general_section' // Section           
@@ -126,18 +126,39 @@ class WRI_Admin_Page {
         );
 
         add_settings_field(
-            'promote', // ID
-            __('Promote WRI!','wri'), // Title 
+            'use_yarpp_title', // ID
+            __('Use Yarpp tilte if WRI title is not set','wri'), // Title 
             array( $this, 'posttype_callback' ), // Callback
             'wri_general_settings_tabpage', // Page
             'wri_general_section' // Section           
         );
 
+
+		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+			add_settings_field(
+	            'hide_woocommerce_related_products', // ID
+	            __('Hide related products displayed by WooCommerce','wri'), // Title 
+	            array( $this, 'posttype_callback' ), // Callback
+	            'wri_general_settings_tabpage', // Page
+	            'wri_general_section' // Section           
+        	);
+			
+		}
+
+        add_settings_field(
+            'promote', // ID
+            __('Promote WRI','wri'), // Title 
+            array( $this, 'posttype_callback' ), // Callback
+            'wri_general_settings_tabpage', // Page
+            'wri_general_section' // Section           
+        );
+		
+
 			  
         //RELATED TAB
         
         $tabpage = 'wri_related_item_types_tabpage';
-        
+		
         foreach ( $this->wri_used_post_types as $act_related_post_type ) {
             //$act_related_post_type
 
@@ -202,7 +223,7 @@ class WRI_Admin_Page {
 
 			add_settings_field(
 	            'thumbnail_columns_number', // ID
-	            __('Number of thumbnail columns','wri'), // Title 
+	            __('Number of thumbnail columns (pro)','wri'), // Title 
 	            array( $this, 'posttype_callback' ), // Callback
 	            $tabpage, //Page  
 	            'wri_related_item_types_section' // Section
@@ -210,7 +231,7 @@ class WRI_Admin_Page {
 				            
 	        add_settings_field(
 	            'cross_taxonomies', // ID
-	            __('Cross Taxonomies','wri'), // Title 
+	            __('Cross taxonomies','wri'), // Title 
 	            array( $this, 'posttype_callback' ), // Callback
 	            $tabpage, //Page  
 	            'wri_related_item_types_section' // Section
@@ -259,7 +280,7 @@ class WRI_Admin_Page {
 
 		        add_settings_field( //HIDDEN
 		            'related_posttype', // ID
-		            __('Related Posttype','wri'), // Title
+		            __('Related post type','wri'), // Title
 		            array( $this, 'posttype_callback' ), // Callback
 		            $tabpage, // Page
 		            'wri_reference2related_items' // Section           
@@ -300,7 +321,7 @@ class WRI_Admin_Page {
 
 		        add_settings_field(
 		            'position_in_archives', // ID
-		            __('Position in Archives','wri'), // Title 
+		            __('Position in Archives (pro)','wri'), // Title 
 		            array( $this, 'posttype_callback' ), // Callback
 		            $tabpage, // Page
 		            'wri_reference2related_items' // Section           
@@ -365,10 +386,10 @@ class WRI_Admin_Page {
 			'enable_plugin' => '',
 			'thumbnail_width' => '', 
 			'thumbnail_height' => '',
-					
 			'wri_maual_relationships_weight' => '100',
-					
+			'use_yarpp_title' => '0',
 			'promote' => '0',
+			'hide_woocommerce_related_products' => '0', 
 		) );
 		
 		update_option( $option_name, $options );
@@ -387,8 +408,7 @@ class WRI_Admin_Page {
 				'display_limit' => '',
 				'match_threshold' => '',
 				'thumbnail_columns_number' => '4',
-				
-			) );
+			));
 			
 			update_option( $option_name, $options );
         	        	
@@ -463,7 +483,7 @@ class WRI_Admin_Page {
 			<?php echo '<a href="?page=wsl-post-relater-products&tab=wri_general_settings_tabpage" class="nav-tab '; echo $active_tab == 'wri_general_settings_tabpage' ? 'nav-tab-active' : ''; printf('">' . __('General','wri') . '</a>'); ?>			
 
 			<!--Related tab-->
-			<?php echo '<a href="?page=wsl-post-relater-products&tab=wri_related_item_types_tabpage" class="nav-tab '; echo $active_tab == 'wri_related_item_types_tabpage' ? 'nav-tab-active' : ''; printf('">' . __('Related','wri') . '</a>'); ?>
+			<?php echo '<a href="?page=wsl-post-relater-products&tab=wri_related_item_types_tabpage" class="nav-tab '; echo $active_tab == 'wri_related_item_types_tabpage' ? 'nav-tab-active' : ''; printf('">' . __('Related Types','wri') . '</a>'); ?>
 							
 			<?php
 			
@@ -471,7 +491,7 @@ class WRI_Admin_Page {
 				
 				?>
 				<!--Reference tabs-->
-			    <a href="?page=wsl-post-relater-products&tab=wri_related_items_settings_tabpage_<?php echo $act_related_post_type -> name ?>" class="nav-tab <?php echo $active_tab == ('wri_related_items_settings_tabpage_' . $act_related_post_type->name) ? 'nav-tab-active' : ''; ?>"><?php printf(__('%s','wri'),$act_related_post_type->labels->name) ?></a>  
+			    <a href="?page=wsl-post-relater-products&tab=wri_related_items_settings_tabpage_<?php echo $act_related_post_type -> name ?>" class="nav-tab <?php echo $active_tab == ('wri_related_items_settings_tabpage_' . $act_related_post_type->name) ? 'nav-tab-active' : ''; ?>"><?php printf(__('%s Page','wri'),$act_related_post_type->labels->name) ?></a>  
 				<?php 
 			} //end foreach 
 			?>
@@ -516,7 +536,8 @@ class WRI_Admin_Page {
 							<td>
 								<?php
 						        printf(
-						            '<input type="checkbox" id="enable_plugin" name="wri_general_settings[enable_plugin]"
+						        	'<input type="hidden" name="wri_general_settings[enable_plugin]" value="0"/>
+						            <input type="checkbox" id="enable_plugin" name="wri_general_settings[enable_plugin]"
 					            	value="1"' . checked( 1, esc_attr( $this->options['enable_plugin']), false ) . ' />'
 								);
 								echo '<br /><span class="description">' . __('Turns on WRI plugin. Turning on WRI plugin, you may want to turn off the "Automatically display" option of Yarpp plugin. In this case, YARPP is running in the background.','wri') . '</span>';
@@ -548,7 +569,8 @@ class WRI_Admin_Page {
 							<td>
 								<?php
 						        printf(
-						            '<input type="checkbox" id="enable_wri_manual_relationships" name="wri_general_settings[enable_wri_manual_relationships]"
+						        	'<input type="hidden" name="wri_general_settings[enable_wri_manual_relationships]" value="0"/>
+						            <input type="checkbox" id="enable_wri_manual_relationships" name="wri_general_settings[enable_wri_manual_relationships]"
 					            	value="1"' . checked( 1, esc_attr( $this->options['enable_wri_manual_relationships']), false ) . ' />'
 								);
 							    echo '<br /><span class="description">' . __('This option allows you manual assignment of items (e.g. assign some product to a post). Assignment can be made on post edit pages, if this checkbox is on. (pro)','wri') . '</span>';
@@ -557,18 +579,18 @@ class WRI_Admin_Page {
 						</tr>
 						
 						<?php
-						
 						?>							
 
 						<tr valign="top">
-							<th scope="row"><?php echo __('Enable settings of WRI Categories (pro)','wri') . ':' ?></th>
+							<th scope="row"><?php echo __('Enable Similarity Marker Categories (pro)','wri') . ':' ?></th>
 							<td>
 								<?php
 						        printf(
-						            '<input type="checkbox" id="enable_wri_category" name="wri_general_settings[enable_wri_category]"
+						        	'<input type="hidden" name="wri_general_settings[enable_wri_category]" value="0"/>
+						            <input type="checkbox" id="enable_wri_category" name="wri_general_settings[enable_wri_category]"
 					            	value="1"' . checked( 1, esc_attr( $this->options['enable_wri_category']), false ) . ($wri_is_premium ? '' : 'disabled') . ' />'
 								);
-								echo '<br /><span class="description">' . __('WRI  Categories are special categories for setting relationships between different elements. WRI Categories can be used to mark similarities between different types of items (e.g. posts and products), helping to increase the correlation between them. You should also switch on "WRI Categories for related items" checkboxes on Related tab, for every required post type.','wri') . '</span>';
+								echo '<br /><span class="description">' . __('WRI Similarity Marker Categories are special categories for setting relationships between different elements, helping to increase the correlation between them. If you switch it on, the categorization metabox appears on edit pages of all used post types.','wri') . '</span>';
 							    ?>
 							</td>
 						</tr>							
@@ -581,25 +603,63 @@ class WRI_Admin_Page {
 							foreach ( $this->wri_supported_post_types as $act_related_post_type ) {
 
 						        printf(
+						            //dont need hidden 0 value
 						            '<input type="checkbox" id="wri_used_posttypes[' . $act_related_post_type -> name . ']" name="' . 'wri_general_settings' . '[wri_used_posttypes][' . $act_related_post_type -> name. ']"
 					            	value="1"' . checked( 1, esc_attr( $this->options['wri_used_posttypes'][$act_related_post_type -> name]), false ) . ' />'
 								);
 								printf( '<label for="wri_used_posttypes[' . $act_related_post_type -> name . ']"> ' . __($act_related_post_type->labels->name,'wri') . '</label><br>' );
 								
 							}
-							//echo '<br /><span class="description">' . __('','wri') . '</span>';
+							echo '<br /><span class="description">' . __('You can select the post types you want to be treated. IMPORTANT: if you change this setting, you may need to save YARPP settings again in Settings -> Related Posts (YARPP) menu item, to refresh them.','wri') . '</span>';
 							?>
 
 							</td>
 							
 						</tr>
-									
+
 						<tr valign="top">
-							<th scope="row"><?php echo __('Promote WRI!','wri') . ':' ?></th>
+							<th scope="row"><?php echo __('Use Yarpp tilte if WRI title is not set','wri') . ':' ?></th>
 							<td>
 								<?php
 						        printf(
-						            '<input type="checkbox" id="promote" name="wri_general_settings[promote]"
+						        	'<input type="hidden" name="wri_general_settings[use_yarpp_title]" value="0"/>
+						            <input type="checkbox" id="use_yarpp_title" name="wri_general_settings[use_yarpp_title]"
+					            	value="1"' . checked( 1, esc_attr( $this->options['use_yarpp_title']), false ) . ' />'
+								);
+							    ?>    
+							</td>
+						</tr>	
+
+						<?php
+						if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
+						?>
+
+							<tr valign="top">
+								<th scope="row"><?php echo __('Hide related products displayed by WooCommerce','wri') . ':' ?></th>
+								<td>
+									<?php
+							        printf(
+							        	'<input type="hidden" name="wri_general_settings[hide_woocommerce_related_products]" value="0"/>
+							            <input type="checkbox" id="hide_woocommerce_related_products" name="wri_general_settings[hide_woocommerce_related_products]"
+						            	value="1"' . checked( 1, esc_attr( $this->options['hide_woocommerce_related_products']), false ) . ' />'
+									);
+									echo '<br /><span class="description">' . __('WooCommerce automatically show some related products. Set this option on to hide it, to avoid duplication of WRI and WooCommerce related items.','wri') . '</span>';									
+								    ?>    
+								</td>
+							</tr>	
+
+						<?php
+						}
+						?>
+
+									
+						<tr valign="top">
+							<th scope="row"><?php echo __('Promote WRI','wri') . ':' ?></th>
+							<td>
+								<?php
+						        printf(
+						        	'<input type="hidden" name="wri_general_settings[promote]" value="0"/>
+						            <input type="checkbox" id="promote" name="wri_general_settings[promote]"
 					            	value="1"' . checked( 1, esc_attr( $this->options['promote']), false ) . ' />'
 								);
 							    ?>    
@@ -628,7 +688,7 @@ class WRI_Admin_Page {
 						settings_fields( $active_tab ); 
 						$this->options = get_option( $option_name ); 
 						
-						printf(__('<h3>Related <i>%s</i></h3>','wri'), __($act_related_post_type->labels->name,'wri'));
+						printf('<h2>' . __('Related <i>%s</i>','wri'). '</h2>', __($act_related_post_type->labels->name,'wri'));
 	
 						
 						printf(__('The settings below overwrite YARPP default display settings specially for <b><i> %s items</i></b>.','wri'),__($act_related_post_type->labels->singular_name,'wri').' '); 
@@ -700,30 +760,38 @@ class WRI_Admin_Page {
 							$taxonomies = array_merge($taxonomies, get_taxonomies( array('name' => 'category'), 'objects' ));
 							$taxonomies = array_merge($taxonomies, get_taxonomies( array('name' => 'post_tag'), 'objects' ));
 							
+							//add all show_ui type category
 							$args = array(
-  								'yarpp_support'	=> true,
+  								//'yarpp_support'	=> true,
   								'show_ui'		=> true,	
   							);
+							
 							$taxonomies = array_merge($taxonomies, get_taxonomies( $args, 'objects' ));
-														
 							?>
 							
 							<tr valign="top">
-								<th scope="row"><?php printf(__('Show cross taxonomy edit section on %s admin page (pro)','wri') . ':',__($act_related_post_type->labels->name,'wri')) ?> </th>
+								<th scope="row"><?php printf(__('Show selected cross taxonomy metaboxes on %s admin page (pro)','wri') . ':',__($act_related_post_type->labels->name,'wri')) ?> </th>
 								<td>
 								<?php        
 
 								//CROSS TAXONOMY SETTINGS    
     							foreach ($taxonomies as $taxonomy) {
-
-							        printf(
-							            '<input type="checkbox" id="cross_taxonomies[' . $taxonomy->name . ']" name="' . $option_name . '[cross_taxonomies][' . $taxonomy->name . ']"
-						            	value="1"' . checked( 1, esc_attr( $this->options['cross_taxonomies'][$taxonomy->name]), false ) . ($wri_is_premium ? '' : 'disabled') . ' />'
-									);
-									printf( '<label for="cross_taxonomies[' . $taxonomy->name . ']"> ' . __($taxonomy->labels->name,'wri') . '</label><br>' );
+	    							
+									//if not WRI own taxonomy (e.g. not wri_category)	
+									if (! $taxonomy->wri_own) {					
+	    								
+	    								
+								        printf(
+								        	//dont need hidden 0 value
+								            '<input type="checkbox" id="cross_taxonomies[' . $taxonomy->name . ']" name="' . $option_name . '[cross_taxonomies][' . $taxonomy->name . ']"
+							            	value="1"' . checked( 1, esc_attr( $this->options['cross_taxonomies'][$taxonomy->name]), false ) . ($wri_is_premium ? '' : 'disabled') . ' />'
+										);
+										printf( '<label for="cross_taxonomies[' . $taxonomy->name . ']"> ' . __($taxonomy->labels->name,'wri') . '</label><br>' );
+									
+									}									
 									
 								}
-								echo '<br /><span class="description">' . __('Cross taxonomies can be used to increase similarities using common categorization between different post types. For example, you can switch on standard post categories for products, so the post category assignment option appears on products admin page. In this way, different post types can be  in the same category, increasing the similarity rates.','wri') . '</span>';
+								echo '<br /><span class="description">' . __('Cross taxonomies can be used to increase similarities using common categorization between different post types. For example, you can switch on WordPress standard post categories for products, so the post category metabox appears on products admin page. In this way, different post types can be  in the same category, increasing the similarity rates.','wri') . '</span>';
 								?>
 								</td>
 							</tr>			
@@ -749,8 +817,7 @@ class WRI_Admin_Page {
 							<th scope="row"><?php echo __('"Relatedness" options','wri') . ':' ?></th>
 							<td>
 								<?php
-								echo '<br /><span class="description">' . __('Set all options of similarity evaulation, especially for consideration of custom post types categories and tags in <i>"Relatedness" options</i> section. 
-									Use <i>Screen Options</i> button on the upper right side of YARPP options page and check <i>"Relatedness" options</i> checkbox to display this section.','wri') . '</span>';
+								echo '<br /><span class="description">' . __('Set all options of similarity evaulation, especially for consideration of custom post types categories and tags in <i>"Relatedness" options</i> section. Use <i>Screen Options</i> button on the upper right side of YARPP options page and check <i>"Relatedness" options</i> checkbox to display this section.','wri') . '</span>';
 							    ?>    
 							</td>
 						</tr>							
@@ -780,10 +847,7 @@ class WRI_Admin_Page {
 					printf(__('<h3>Related items on %s reference pages</h3>','wri'),__($act_reference_post_type->labels->singular_name,'wri'));
 
 					printf('<span class="description">' 
-							. __('On reference item tabs you can set how to display related items for the item type appointed by the actual tab. <br>
-									For example, if you want to set how to display related PRODUCTS for POSTS, 
-									you can use settings in PRODUCTS row on POST Reference Items tab. 
-									Such a matrix-like way you can specify all necessary variations of display settings.') 
+							. __('On reference item tabs you can set how to display related items for the item type appointed by the actual tab. For example, if you want to set how to display related PRODUCTS for POSTS, you can use settings in PRODUCTS row on POST Reference Items tab. Such a matrix-like way you can specify all necessary variations of display settings.', 'wri') 
 							. '</span><br><br>');
 					printf(__('Related items display setting on <b><i>%1s pages</i></b> and <b><i>%2s archive pages</i></b>','wri') . ':'
 						,__($act_reference_post_type->labels->singular_name,'wri'), __($act_reference_post_type->labels->singular_name,'wri')
@@ -989,8 +1053,7 @@ class WRI_Admin_Page {
 						</tr>
 						<tr valign="top">
 							<th scope="row"><?php _e('Yarpp custom Template','wri') ?></th>
-							<th  scope="row"><!--Yarpp custom Template-->	<?php echo '<span class="description">' . __('Your own template files can be used. Your templates should be in main directory of your active theme, the file name must conform to following naming convention: yarpp-template-....php<br>
-								Please find more details about templates in Yarpp documentations.)','wri') . '</span>'; ?>
+							<th  scope="row"><!--Yarpp custom Template-->	<?php echo '<span class="description">' . __('Your own template files can be used. Your templates should be in main directory of your active theme, the file name must conform to following naming convention: yarpp-template-....php. Please find more details about templates in Yarpp documentations.)','wri') . '</span>'; ?>
 							</th>
 						</tr>
 					</table>
@@ -1025,19 +1088,16 @@ class WRI_Admin_Page {
 							a.wli_pro:active {color: black; text-decoration:none;}
 						</style>
 
-						<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-						<input type="hidden" name="cmd" value="_s-xclick">
-						<input type="hidden" name="hosted_button_id" value="9BNCA3P5MZMQG">
-						<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
-						<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-						</form>
+						<a href="http://webshoplogic.com/donation-wp-related-items-lite/" class="wli_pro" target="_blank">
+							<img alt="Donate" src="<?php echo plugins_url('images/paypal_btn_donate_lg.gif', __FILE__)?>">
+						</a>
 						
 						<a href="http://webshoplogic.com/product/wp-related-items-wri-plugin/" class="wli_pro" target="_blank">
 							<h2><?php _e('Upgrade to PRO version', 'wri'); ?></h2>
 						</a>							
 						
 						<a href="http://webshoplogic.com/product/wp-related-items-wri-plugin/" class="wli_pro" target="_blank">
-							<img src="http://emberpalanta.hu/wp-content/plugins/wp-related-items/images/WLI_product_box_PRO_upgrade_right_v1_2e_235x235.png" alt="Upgrade to PRO">
+							<img src="<?php echo plugins_url('images/WLI_product_box_PRO_upgrade_right_v1_2e_235x235.png', __FILE__)?>" alt="Upgrade to PRO">
 						</a>
 						
 						<ul>
@@ -1047,13 +1107,13 @@ class WRI_Admin_Page {
 							<li><h3><?php _e('Manual relationship assignments', 'wri'); ?></h3></li>
 							<li><?php _e('More positioning options', 'wri'); ?></li>
 							<li><?php _e('Display related items on archive pages', 'wri'); ?></li>
-							<li><?php _e('Configured number of thumbnail columns', 'wri'); ?></li>
+							<li><?php _e('Configurable number of thumbnail columns', 'wri'); ?></li>
 							<li><?php _e('Use different related item widget on different reference item types', 'wri'); ?></li>
 							<li><?php _e('Use related item widget on archive pages', 'wri'); ?></li>
 							</b>
 						</ul>						
 							
-						<?php _e('Cross taxonomies can be used to increase similarities using common categorization between different post types. For example, you can switch on standard post categories for products, so the post category assignment option appears not only on post edit page but on products admin page also. In this way, different post types can be in the same category, increasing the similarity rates.', 'wri'); ?>
+						<?php _e('Cross taxonomies can be used to increase similarities using common categorization between different post types. For example, you can switch on WordPress standard post categories for products, so the post category metabox appears on products admin page. In this way, different post types can be  in the same category, increasing the similarity rates.', 'wri'); ?>
 						<br><br>
 						<?php _e('Manual assignment of items is possible. This way you can define explicit relationship between different items (e.g. assign some product to a post or two related posts to each other)', 'wri'); ?>
 							
