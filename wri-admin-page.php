@@ -133,7 +133,31 @@ class WRI_Admin_Page {
             'wri_general_section' // Section           
         );
 
+        add_settings_field(
+            'dequeue_style_yarppRelatedCss', // ID
+            __('Disable YARPP related.css stylesheet','wri'), // Title 
+            array( $this, 'posttype_callback' ), // Callback
+            'wri_general_settings_tabpage', // Page
+            'wri_general_section' // Section           
+        );
 
+        add_settings_field(
+            'dequeue_style_yarppWidgetCss', // ID
+            __('Disable YARPP widget.css stylesheet','wri'), // Title 
+            array( $this, 'posttype_callback' ), // Callback
+            'wri_general_settings_tabpage', // Page
+            'wri_general_section' // Section           
+        );
+                
+        add_settings_field(
+            'disable_styles_wri_thumbnails_woocommerceCss', // ID
+            __('Disable WRI styles-wri-thumbnails_woocommerce.css stylesheet','wri'), // Title 
+            array( $this, 'posttype_callback' ), // Callback
+            'wri_general_settings_tabpage', // Page
+            'wri_general_section' // Section           
+        );
+                
+                
 		if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 			add_settings_field(
 	            'hide_woocommerce_related_products', // ID
@@ -388,6 +412,9 @@ class WRI_Admin_Page {
 			'thumbnail_height' => '',
 			'wri_maual_relationships_weight' => '100',
 			'use_yarpp_title' => '0',
+            'dequeue_style_yarppRelatedCss' => '0',
+            'dequeue_style_yarppWidgetCss' => '0',
+            'disable_styles_wri_thumbnails_woocommerceCss' => '0',
 			'promote' => '0',
 			'hide_woocommerce_related_products' => '0', 
 		) );
@@ -626,6 +653,48 @@ class WRI_Admin_Page {
 						            <input type="checkbox" id="use_yarpp_title" name="wri_general_settings[use_yarpp_title]"
 					            	value="1"' . checked( 1, esc_attr( $this->options['use_yarpp_title']), false ) . ' />'
 								);
+							    ?>    
+							</td>
+						</tr>	
+
+						<tr valign="top">
+							<th scope="row"><?php echo __('Disable YARPP related.css stylesheet','wri') . ':' ?></th>
+							<td>
+								<?php
+						        printf(
+						        	'<input type="hidden" name="wri_general_settings[dequeue_style_yarppRelatedCss]" value="0"/>
+						            <input type="checkbox" id="dequeue_style_yarppRelatedCss" name="wri_general_settings[dequeue_style_yarppRelatedCss]"
+					            	value="1"' . checked( 1, esc_attr( $this->options['dequeue_style_yarppRelatedCss']), false ) . ' />'
+								);
+								echo '<br /><span class="description">' . __('Turn this on for use custom styles instead of YARPP standard related stylesheet.','wri') . '</span>';
+							    ?>    
+							</td>
+						</tr>	
+        
+						<tr valign="top">
+							<th scope="row"><?php echo __('Disable YARPP widget.css stylesheet','wri') . ':' ?></th>
+							<td>
+								<?php
+						        printf(
+						        	'<input type="hidden" name="wri_general_settings[dequeue_style_yarppWidgetCss]" value="0"/>
+						            <input type="checkbox" id="dequeue_style_yarppWidgetCss" name="wri_general_settings[dequeue_style_yarppWidgetCss]"
+					            	value="1"' . checked( 1, esc_attr( $this->options['dequeue_style_yarppWidgetCss']), false ) . ' />'
+								);
+								echo '<br /><span class="description">' . __('Turn this on for use custom styles instead of YARPP standard widget stylesheet.','wri') . '</span>';								
+							    ?>    
+							</td>
+						</tr>	
+
+						<tr valign="top">
+							<th scope="row"><?php echo __('Disable WRI styles-wri-thumbnails_woocommerce.css stylesheet','wri') . ':' ?></th>
+							<td>
+								<?php
+						        printf(
+						        	'<input type="hidden" name="wri_general_settings[disable_styles_wri_thumbnails_woocommerceCss]" value="0"/>
+						            <input type="checkbox" id="disable_styles_wri_thumbnails_woocommerceCss" name="wri_general_settings[disable_styles_wri_thumbnails_woocommerceCss]"
+					            	value="1"' . checked( 1, esc_attr( $this->options['disable_styles_wri_thumbnails_woocommerceCss']), false ) . ' />'
+								);
+								echo '<br /><span class="description">' . __('Turn this on for use custom styles instead of WRI standard thumbnail stylesheet for WooCommerce.','wri') . '</span>';								
 							    ?>    
 							</td>
 						</tr>	
@@ -1080,17 +1149,6 @@ class WRI_Admin_Page {
 					?>  			
 	
 					<div class="wri_admin_left_sidebar" style="float:right; ">
-						
-						<style>
-							a.wli_pro:link {color: black; text-decoration:none;}
-							a.wli_pro:visited {color: black; text-decoration:none;}
-							a.wli_pro:hover {color: black; text-decoration:underline;}
-							a.wli_pro:active {color: black; text-decoration:none;}
-						</style>
-
-						<a href="http://webshoplogic.com/donation-wp-related-items-lite/" class="wli_pro" target="_blank">
-							<img alt="Donate" src="<?php echo plugins_url('images/paypal_btn_donate_lg.gif', __FILE__)?>">
-						</a>
 						
 						<a href="http://webshoplogic.com/product/wp-related-items-wri-plugin/" class="wli_pro" target="_blank">
 							<h2><?php _e('Upgrade to PRO version', 'wri'); ?></h2>

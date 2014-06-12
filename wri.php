@@ -3,13 +3,13 @@
 Plugin Name: WP Related Items (WRI) by WebshopLogic
 Plugin URI: http://webshoplogic.com/product/wp-related-items-lite-wri-plugin/
 Description: Would you like to offer some related products to your blog posts from your webshop? Do you have an event calendar plugin, end want to suggest some programs to an article? Do you have a custom movie catalog plugin and want to associate some articles to your movies? You need WordPress Related Items plugin, which supports cross post type relationships.
-Version: 1.1.0
+Version: 1.1.2
 Author: WebshopLogic
 Author URI: http://webshoplogic.com/
 License: GPLv2 or later
 Text Domain: wri
 Requires at least: 3.7.1
-Tested up to: 3.7.1
+Tested up to: 3.9.1
 */
 
 
@@ -96,11 +96,32 @@ class WRI {
 				remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20);
 			}
 
+			//Disable YARPP related.css stylesheet	
+			if ( 1 == $wri_general_settings['dequeue_style_yarppRelatedCss'] ) {
+				add_action('get_footer', array( $this, 'dequeue_footer_styles') );
+			}
+			
+			//Disable YARPP widget.css stylesheet				
+			if ( 1 == $wri_general_settings['dequeue_style_yarppWidgetCss'] ) {
+				add_action('wp_print_styles',array( $this, 'dequeue_header_styles') );
+			}	
+			
 		}
-
 
 	}
 
+	//Disable YARPP related.css stylesheet
+	function dequeue_footer_styles()
+	{
+	  wp_dequeue_style('yarppRelatedCss');
+	}
+		
+	//Disable YARPP widget.css stylesheet		
+	function dequeue_header_styles()
+	{
+	  wp_dequeue_style('yarppWidgetCss');
+	}	
+	
 	public function wri_activation() {
 
 		require_once(ABSPATH . 'wp-admin/includes/file.php');
@@ -341,7 +362,7 @@ class WRI {
 
 	//disable plugin update notice (in PRO)
 	function filter_plugin_updates( $value ) {
-		if($value->response[ plugin_basename(__FILE__) ]) 
+		if(isset($value->response[ plugin_basename(__FILE__) ]))		
 			unset($value->response[ plugin_basename(__FILE__) ]);	    
 	    return $value;
 	}	

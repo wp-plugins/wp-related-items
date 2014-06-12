@@ -83,9 +83,9 @@ function wri_woocommerce_item_columns_class( $classes ) {
 	return $classes;
 }
 
-function wri_woocommerce_css() {
-	wp_enqueue_style( "wri-thumbnails-woocommerce", get_template_directory_uri() . '/' . 'wri_template/styles-wri-thumbnails_woocommerce.css');
-}
+//function wri_woocommerce_css() {
+//	wp_enqueue_style( "wri-thumbnails-woocommerce", get_template_directory_uri() . '/' . 'wri_template/styles-wri-thumbnails_woocommerce.css');
+//}
 
 if ( is_plugin_active( 'woocommerce/woocommerce.php' ) ) { 
 	add_action( 'wri_intagration_init', 'wri_woocommerce_init' );

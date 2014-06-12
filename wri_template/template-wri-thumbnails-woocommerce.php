@@ -17,7 +17,10 @@ if ( have_posts() ) {
 	//include ($woocommerce->plugin_path() . '/templates/loop-shop.php');
 	include ('template-wri-woocommerce-loop-shop.php');
 	printf ('</div>');
-	
-	wp_enqueue_style( "wri-thumbnails-woocommerce", get_template_directory_uri() . '/' . 'wri_template/styles-wri-thumbnails_woocommerce.css');
+
+	$wri_general_settings = get_option('wri_general_settings');
+	if ( 1 != $wri_general_settings['disable_styles_wri_thumbnails_woocommerceCss'] ) {
+		wp_enqueue_style( "wri-thumbnails-woocommerce", get_template_directory_uri() . '/' . 'wri_template/styles-wri-thumbnails_woocommerce.css');
+	}
 
 }
