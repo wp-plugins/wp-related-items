@@ -1012,8 +1012,15 @@ class WRI_Admin_Page {
 						        printf(
 						            '<select id="position" name="' . $option_name . '[position]" />
 							            <option value="top"' . selected( 'top', esc_attr( $this->options['position']), false) . ($wri_is_premium ? '' : 'disabled') . '>' . __('Top of page','wri') . '</option>
-							            <option value="bottom"' . selected( 'bottom', esc_attr( $this->options['position']), false) . '>' . __('Bottom of page','wri') . '</option>
-							            <option value="just_on_widget"' . selected( 'just_on_widget', esc_attr( $this->options['position']), false) . '>' . __('None or just widgets','wri') . '</option>
+							            <option value="bottom"' . selected( 'bottom', esc_attr( $this->options['position']), false) . '>' . __('Bottom of page','wri') . '</option>'
+							    );        
+								if ( is_plugin_active( 'woocommerce/woocommerce.php' ) and $wri_is_premium and $act_reference_post_type->name == 'product' ) {
+									 printf(
+										'<option value="wc_product"' . selected( 'wc_product', esc_attr( $this->options['position']), false) . '>' . __('WooCommerce Product page','wri') . '</option>'
+									);
+								} 
+								printf(
+							        '<option value="just_on_widget"' . selected( 'just_on_widget', esc_attr( $this->options['position']), false) . '>' . __('None or just widgets','wri') . '</option>
 						            </select>'
 						        );
 							    ?>

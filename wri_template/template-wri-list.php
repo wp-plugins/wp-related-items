@@ -17,7 +17,7 @@ if (have_posts()) {
 		the_post();
 
 		$output .= $yarpp_option['before_title'];
-		$output .= '<a href="' . $post->post_permalink . '">' . $post->post_title . '</a>';
+		$output .= "<a href='" . get_permalink() . "'>" . $post->post_title .  "</a>" . "\n";
 		$output .= $yarpp_option['after_title'];
 
 	}

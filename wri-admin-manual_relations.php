@@ -49,6 +49,20 @@ class WRI_manual_relationships {
 
 		global $wri, $wri_is_premium;
 
+		$locations = array();
+		$i = 0;
+
+		foreach ( $wri->wri_used_post_types('names') as $wri_used_post_type_name ) {
+			$i++;
+			$locations[][] = array (
+							'param' => 'post_type',
+							'operator' => '==',
+							'value' => $wri_used_post_type_name,
+							'order_no' => 0,
+							'group_no' => $i,
+						);
+		}
+
 		if(function_exists("register_field_group"))
 		{
 			register_field_group(array (
@@ -82,7 +96,8 @@ class WRI_manual_relationships {
 						'max' => '',
 					),
 				),
-				'location' => array (
+				'location' => $locations,
+				/*array (
 					array (
 						array (
 							'param' => 'post_type',
@@ -101,7 +116,7 @@ class WRI_manual_relationships {
 							'group_no' => 1,
 						),
 					),
-				),
+				),*/
 				'options' => array (
 					'position' => 'normal',
 					'layout' => 'default',

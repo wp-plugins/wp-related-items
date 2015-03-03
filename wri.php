@@ -3,16 +3,31 @@
 Plugin Name: WP Related Items (WRI) by WebshopLogic
 Plugin URI: http://webshoplogic.com/product/wp-related-items-lite-wri-plugin/
 Description: Would you like to offer some related products to your blog posts from your webshop? Do you have an event calendar plugin, end want to suggest some programs to an article? Do you have a custom movie catalog plugin and want to associate some articles to your movies? You need WordPress Related Items plugin, which supports cross post type relationships.
-Version: 1.1.2
+Version: 1.1.6
 Author: WebshopLogic
 Author URI: http://webshoplogic.com/
 License: GPLv2 or later
 Text Domain: wri
 Requires at least: 3.7.1
-Tested up to: 3.9.1
+Tested up to: 4.1
 */
 
+/*  Copyright 2014 Peter Rath WebshopLogic
 
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+*/
 if ( ! class_exists( 'WRI' ) ) {
 
 class WRI {
@@ -170,7 +185,7 @@ class WRI {
 				. $this->promote_text();
 			add_filter( 'the_content', array( $this, 'the_wri_content_page_bottom' ), 1200 );
 		}
-	return $content;
+		return $content;
 	}
 
 
@@ -205,7 +220,7 @@ class WRI {
 
 			$wri_used_posttypes = array_keys( $wri_general_settings['wri_used_posttypes'] );
 
-			if (in_array($reference_post_type_name, $wri_used_posttypes)) {  //reference post type is supported by WRI?
+			if ( is_array($wri_used_posttypes) and  in_array($reference_post_type_name, $wri_used_posttypes) ) {  //reference post type is supported by WRI?
 
 				unset($reference2related_option_array);    // This deletes the whole array
 
@@ -231,6 +246,9 @@ class WRI {
 					$singular = is_singular();
 
 					foreach ($reference2related_option_array as $reference2related_option) {
+						
+						logToFile(null, 'wri.php $position: ' . var2text($position));
+						logToFile(null, 'wri.php $reference2related_option[position]: ' . var2text($reference2related_option['position']));
 
 						if (
 								('on_page' == $placement && $singular && $reference2related_option['position'] == $position) //in case of on_page display, if position is fit
@@ -410,7 +428,7 @@ class WRI {
 
 	    // Set yarpp_support argument for wri supported post types
    		if ( is_array($wri_used_posttypes) ) {	    
-	   		if ( in_array( $post_type, array_keys( $wri_used_posttypes ) ) ) {
+	   		if ( is_array($wri_used_posttypes) and in_array( $post_type, array_keys( $wri_used_posttypes ) ) ) {
 	   			$wp_post_types[$post_type]->yarpp_support = true;
 	   		}
 		}

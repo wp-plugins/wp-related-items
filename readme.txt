@@ -3,18 +3,19 @@ Contributors: WebshopLogic
 Donate link: http://webshoplogic.com/donation-wp-related-items-lite/
 Tags: related, related items, related posts, relationship, cross relationship, up-sell, cross-sell, similar, webshop, e-commerce, custom posttype, yarpp, yet another related posts plugin, woocommerce, thumbnails, automatic relationship, manual relationship
 Requires at least: 3.7.1
-Tested up to: 3.9.1
-Stable tag: 1.1.2
+Tested up to: 4.1
+Stable tag: 1.1.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-
-WP Related Items plugin makes visible every kind of hidden connections of your site for your business. 
+WP Related Items plugin offers different types of similar contents for your users. For example some related products can be displayed to your posts.    
 
 == Description ==
 
+WP Related Items plugin offers different types of similar contents for your users. For example some related products can be displayed to your similar posts. This makes connections of your site contents visible to your clients, increasing business efficiency.
+
 Would you like to offer some related products to your blog posts? Do you need offer up-sell or cross-sell products? Do you have an event calendar plugin, and want to suggest some programs connected to an article? Do you have a custom movie catalog plugin and want to associate some articles to your movies?
 
-Using cross relationship management functions, WRI makes it possible to associate a post, page, or other custom post type to other posts, pages or custom post types, ensures widely configurable relatedness settings, sophisticated cross-relation adjustments. WRI uses the most popular YARPP relationship handling plugin in the background, extending its functionality, retaining its advantages.
+Using cross type relationship management functions, WRI makes it possible to associate a post, page, or other custom post type to other posts, pages or custom post types, ensures widely configurable relatedness settings, sophisticated cross-relation adjustments. WRI uses the most popular YARPP relationship handling plugin in the background, extending its functionality, retaining its advantages.
 
 WRI combines automatic, manual and common categorization based relationship management. Some functions are available in the PRO version.
 
@@ -22,43 +23,9 @@ You can set attributes that define how to display different type of related item
 
 This version ensures built in WooCommerce custom product support. 
 
-Author website: http://webshoplogic.com/
+Please find more information on the product documentation page: http://webshoplogic.com/product/wp-related-items-lite-wri-wordpress-plugin/
 
-Pro version Plugin Page: http://webshoplogic.com/product/wp-related-items-wri-plugin/
-
-= Configuration options =
-
-You can chose which post types would like to use (e.g. posts, product, pages). You can set separately how different type of related items should be displayed for PAGEs, POSTs or for CUSTOM POST TYPEs (e.g. for PRODUCTs or EVENTs). Position, order of blocks, order of related items, match threshold, number of displayed related items limit, format (list or widgets), custom templates can be configured for each reference post types – related post type pair in the matrix. This is very important, because every post type has specific features you would like to be treated. 
-Related items can be displayed right after the reference item, or on sidebar widgets.
-
-= PRO version =
-
-Cross taxonomies can be used to increase similarities using common categorization between different post types. For example, you can switch on WordPress standard post categories for products, so the post category assignment option appears not only on post edit page but on products admin page also. In this way, different post types can be in the same category, increasing the similarity rates between them.
-
-Manual assignment of items is possible. This way you can define explicit relationship between different items (e.g. assign some product to a post or two related posts to each other)
-
-= Features =
-* Easy cross-relation adjustments
-* Selectable post types
-* Unique settings for every reference-related item type pairs
-* Display Thumbnails
-* Related items widgets
-* Native WooCommerce support
-* Extendable custom post type handling
-* Template Customization
-* Includes .mo and .po files for localization
-* YARPP support
-
-= Pro features =
-* Manually recorded relationships
-* Common categories and tags for different item types
-* More relationship widget options
-* Display positioning (top or bottom of content)
-* Related items for archive pages
-Pro version Plugin Page: http://webshoplogic.com/product/wp-related-items-wri-plugin/
-
-= Upcoming features =
-* Native support of further WP based e-commerce solutions
+PRO version Plugin Page: http://webshoplogic.com/product/wp-related-items-pro-wri-wordpress-plugin/
 
 = Available languages =
 * English
@@ -73,44 +40,8 @@ Pro version Plugin Page: http://webshoplogic.com/product/wp-related-items-wri-pl
 
 == Frequently Asked Questions ==
 
-= Where is the detailed description of admin panel? =
-
-Find detailed description for each field on admin page.
-
-= What is reference post type? =
-
-Post type for which you want to display the related items. 
-
-= What is related post type? =
-
-Post types which you want to display as similar items.
-
-= It is possible to use widgets for display related items? =
-
-Yes, you can use WP Related Items (WRI) widget to display related items on the sidebar. More widget can be used, if you want display different related posts. Widgets can work contextual way, for different reference post type.
-
-= Does WRI support WooCommerce products? =
-
-Yes, WRI supports WooCommerce products natively.
-
-= Does WRI support other custom post types? =
-
-Yes. WRI uses the YARPP plugin that supports custom post types. Please find more information in YARPP documentation.
-
-= What causes that related items do not appear? =
-
-The problem may be caused by several reasons:
-
-a. It is possible that the relevancy of similar products is lower than the match threshold, so YARPP can't find any related items. 
-Try to use lower match threshold using one of the following ways:
-- set lower threshold value for every post type on “Related Types” tab of “WP Related Items” options page.
-- or leave the above fields empty and set “Match threshold” on "Related Posts (YARPP)" options page. (If you can’t find these settings on YARPP admin page, you should switch on "Relatedness options" section using "Screen Options" tab on the upper right corner of YARPP options page.)
-You can try to enter the value 1 as threshold, and if you get related items, you can increase the value (if the value is too low, less relevant items will be displayed). So you can find the optimal threshold value.
-
-b. After you change WP Related Items settings, you may need to save YARPP settings also in Settings -> Related Posts (YARPP) menu, to refresh them. So please push “Save Changes” button on “Related Posts (YARPP)” options page.
-
-c. Try to increase relevancy between different types of post by using same words on the title or content or if you have pro version, use common categories or tags between different types of items.
-
+=You can find FAQ here:=
+http://webshoplogic.com/product/wp-related-items-lite-wri-wordpress-plugin/#tab-faq&noscroll
 
 == Screenshots ==
 
@@ -130,6 +61,22 @@ c. Try to increase relevancy between different types of post by using same words
 
 
 == Changelog ==
+
+= 1.1.6 =
+* fix: change mktime fv to time (Strict standards)
+* modified: new acf version
+* new related items positioning option on "WooCommerce Product page" 
+* fix link problem in list mode
+
+= 1.1.5 =
+* fix: empty array problem at manual relationship admin
+
+= 1.1.4 =
+* fix: Manual relationship meta box empty problem (admin_init action needed instead of add_meta_boxes, because of ACF speciality)
+* fix: duplicate manual items on the manualy related (remote) side
+
+= 1.1.3 =
+* fix: Manual relationship meta box display problem, in case of some custom post types 
 
 = 1.1.2 =
 * fix: manual relationship field LOV wri_used_post_types problem
